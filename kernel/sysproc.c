@@ -95,3 +95,42 @@ sys_uptime(void)
   release(&tickslock);
   return xticks;
 }
+
+//lab1 functionality implemenetation - Karthik Harpanahalli (862254197) & Varun Sapre (862255166)
+uint64
+sys_info(void)
+{
+  int param;
+  argint(0, &param);
+
+  if(param == 1)
+  {
+    int process_count = getProcessCount();
+    printf("\n\n      ###########     Karthik Harpanahalli (862254197) & Varun Sapre (862255166)     ###########      \n\n");
+    printf("The process count is: %d\n\n", process_count);
+    return process_count;
+  }
+
+  else if(param == 2)
+  {
+    int sys_process_count = getSystemCallCount();
+    printf("\n\n      ###########     Karthik Harpanahalli (862254197) & Varun Sapre (862255166)     ###########      \n\n");
+    printf("The number of system calls made by the current process: %d\n\n", sys_process_count);
+    return sys_process_count;
+  }
+
+  else if(param == 3)
+  {
+    int memory_pages = getMemoryPage();
+    printf("\n\n      ###########     Karthik Harpanahalli (862254197) & Varun Sapre (862255166)     ###########      \n\n");
+    printf("The number of memory pages used by the current process: %d\n\n", memory_pages);
+    return memory_pages;
+  }
+
+  else
+  {
+    printf("Invalid argument: %d\n", param);
+    return -1;
+  }
+
+}

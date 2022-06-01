@@ -119,6 +119,7 @@ allocproc(void)
 found:
   p->pid = allocpid();
   p->state = USED;
+  p->syscallCount = 0;
 
   // Allocate a trapframe page.
   if((p->trapframe = (struct trapframe *)kalloc()) == 0){
@@ -653,4 +654,45 @@ procdump(void)
     printf("%d %s %s", p->pid, state, p->name);
     printf("\n");
   }
+}
+
+//Count the number of process
+int getProcessCount(void)
+{
+  //Counter for process
+  int process_count = 0;
+  struct proc *p; 
+
+
+  //loop through process and filter processes that are in UNUSED state
+  for(p = proc; p < &proc[NPROC]; p++)
+  {
+    //acquire lock for the process table
+    acquire(&p->lock);
+    if(p->state != UNUSED)
+      {
+        process_count++;
+      }
+    release(&p->lock);
+  }
+
+  return process_count;
+}
+
+//Return the count of systemcalls made by the process
+int getSystemCallCount(void)
+{
+  struct proc *p = myproc();
+  return p -> syscallCount;
+}
+
+//Prints hello message
+int getMemoryPage(void)
+{
+  struct proc *p = myproc();
+  uint sz = p->sz;
+  
+  // find the PageTable size rounded up using PGROUNDUP and then divide that with the PAGESIZE
+  int memory_pages = (PGROUNDUP(sz))/PGSIZE;
+  return memory_pages;
 }
