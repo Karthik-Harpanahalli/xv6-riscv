@@ -388,9 +388,10 @@ fork(void)
 
 //Implementation of clone function 
 int
-clone(void *stack, int size)
+clone(void *stack)
 {
   int i, tid;
+  int size = PGSIZE * sizeof(void);
 
   //Intialize struct proc, this contains few modifications to handle thread functionality
   struct proc *np;

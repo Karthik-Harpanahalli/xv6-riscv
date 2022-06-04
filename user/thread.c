@@ -1,6 +1,7 @@
 #include "kernel/types.h"
 #include "kernel/stat.h"
 #include "user/user.h"
+#include "kernel/riscv.h"
 #include "user/thread.h"
 #include "kernel/spinlock.h"
 
@@ -11,13 +12,13 @@ int thread_create(void *(*start_routine)(void*), void *arg) {
 	int threadID;
 	
 	//Initialize stack size
-	int stack_size = 4096 * sizeof(void);
+	int stack_size = PGSIZE * sizeof(void);
 	
 	//Initialize separate stack space, to keep separate stack for thread created by parent.
 	void* stack = (void*)malloc(stack_size);
 	
 	//Calling clone function that creates a new thread with new stack but shared address space and file directives
-	threadID  = clone(stack,stack_size);
+	threadID  = clone(stack);
 	
 	if(threadID == 0) {
 		//Call routing is correct thread ID is returned i.e child thread

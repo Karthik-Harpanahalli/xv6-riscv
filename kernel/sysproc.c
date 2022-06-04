@@ -104,5 +104,5 @@ sys_clone(void)
   int size;
   argaddr(0, &temp);
   argint(1, &size);
-  return clone((void *)temp, size);
+  return clone((void *)temp);
 }
