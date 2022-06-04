@@ -101,8 +101,6 @@ uint64
 sys_clone(void)
 {
   uint64 temp;
-  int size;
   argaddr(0, &temp);
-  argint(1, &size);
   return clone((void *)temp);
 }
